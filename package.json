@@ -4,7 +4,10 @@
   "description": "Curated coding documentation and knowledge sources for Aether 2.0's models.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "ingest:mdn:sample": "node scripts/ingest/mdn.js",
+    "test": "node --test",
+    "validate": "npm run validate:sources && npm run validate:records",
+    "validate:records": "node scripts/validate/records.js",
     "validate:sources": "node scripts/validate/sources.js"
   },
   "repository": {
@@ -22,5 +25,8 @@
   "devDependencies": {
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1"
   }
 }

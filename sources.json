@@ -1,29 +1,50 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "sources": [
     {
       "id": "mdn",
       "name": "MDN Web Docs",
       "provider": "Mozilla",
       "authority": "official-reference",
-      "topics": [
-        "javascript",
-        "html",
-        "css",
-        "web-apis"
-      ],
+      "topics": ["javascript", "html", "css", "web-apis"],
       "sourceType": "git",
       "repository": "https://github.com/mdn/content.git",
       "contentPath": "files/en-us",
       "homepage": "https://developer.mozilla.org/",
-      "license": {
-        "id": "CC-BY-SA",
-        "sourcePath": "LICENSE.md"
+      "licensing": {
+        "policyPaths": ["LICENSE.md"],
+        "rules": [
+          {
+            "licenseId": "CC-BY-SA-2.5",
+            "scope": "prose",
+            "condition": { "kind": "unconditional" }
+          },
+          {
+            "licenseId": "CC0-1.0",
+            "scope": "code",
+            "condition": {
+              "kind": "introduced-on-or-after",
+              "date": "2010-08-20"
+            }
+          },
+          {
+            "licenseId": "MIT",
+            "scope": "code",
+            "condition": {
+              "kind": "introduced-before",
+              "date": "2010-08-20"
+            }
+          }
+        ]
       },
       "provenance": {
-        "preserveRepository": true,
-        "preserveCommit": true,
-        "preserveSourcePath": true
+        "requiredFields": ["repository", "commit", "sourcePath", "contentHash"]
+      },
+      "adapter": {
+        "id": "mdn",
+        "version": 1,
+        "metadataNamespace": "mdn",
+        "metadataSchema": "schemas/source-metadata/mdn.schema.json"
       },
       "enabled": true
     },
@@ -32,22 +53,23 @@
       "name": "Node.js API Documentation",
       "provider": "OpenJS Foundation / Node.js",
       "authority": "official",
-      "topics": [
-        "nodejs",
-        "javascript"
-      ],
+      "topics": ["nodejs", "javascript"],
       "sourceType": "git",
       "repository": "https://github.com/nodejs/node.git",
       "contentPath": "doc/api",
       "homepage": "https://nodejs.org/docs/latest/api/",
-      "license": {
-        "id": "MIT",
-        "sourcePath": "LICENSE"
+      "licensing": {
+        "policyPaths": ["LICENSE"],
+        "rules": [
+          {
+            "licenseId": "MIT",
+            "scope": "document",
+            "condition": { "kind": "unconditional" }
+          }
+        ]
       },
       "provenance": {
-        "preserveRepository": true,
-        "preserveCommit": true,
-        "preserveSourcePath": true
+        "requiredFields": ["repository", "commit", "sourcePath", "contentHash"]
       },
       "enabled": true
     },
@@ -56,22 +78,23 @@
       "name": "Git Documentation",
       "provider": "Git Project",
       "authority": "official",
-      "topics": [
-        "git",
-        "version-control"
-      ],
+      "topics": ["git", "version-control"],
       "sourceType": "git",
       "repository": "https://github.com/git/git.git",
       "contentPath": "Documentation",
       "homepage": "https://git-scm.com/docs",
-      "license": {
-        "id": "GPL-2.0-only",
-        "sourcePath": "COPYING"
+      "licensing": {
+        "policyPaths": ["COPYING"],
+        "rules": [
+          {
+            "licenseId": "GPL-2.0-only",
+            "scope": "document",
+            "condition": { "kind": "unconditional" }
+          }
+        ]
       },
       "provenance": {
-        "preserveRepository": true,
-        "preserveCommit": true,
-        "preserveSourcePath": true
+        "requiredFields": ["repository", "commit", "sourcePath", "contentHash"]
       },
       "enabled": true
     }

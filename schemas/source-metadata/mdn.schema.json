@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/TheMiiSquadron/Aether-2.0-Code-Knowledge/schemas/source-metadata/mdn.schema.json",
+  "title": "MDN Processed Record Source Metadata",
+  "type": "object",
+  "required": ["namespace", "schemaVersion", "data"],
+  "properties": {
+    "namespace": { "const": "mdn" },
+    "schemaVersion": { "const": 1 },
+    "data": {
+      "type": "object",
+      "required": ["slug", "pageType"],
+      "properties": {
+        "slug": { "type": "string", "minLength": 1 },
+        "pageType": { "type": "string", "minLength": 1 },
+        "shortTitle": { "type": "string", "minLength": 1 },
+        "browserCompat": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "sidebar": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "status": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "enum": ["deprecated", "experimental", "non-standard"] }
+        },
+        "specUrls": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "format": "uri" }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

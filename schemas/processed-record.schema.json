@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/TheMiiSquadron/Aether-2.0-Code-Knowledge/schemas/processed-record.schema.json",
+  "title": "Aether 2.0 Processed Knowledge Record",
+  "type": "object",
+  "required": ["schemaVersion", "id", "document", "provenance", "content", "licensing", "sourceMetadata"],
+  "properties": {
+    "$schema": { "type": "string", "format": "uri-reference" },
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "minLength": 3, "pattern": "^[a-z0-9][a-z0-9-]*:.+$" },
+    "document": { "$ref": "#/$defs/document" },
+    "provenance": { "$ref": "#/$defs/provenance" },
+    "content": { "$ref": "#/$defs/content" },
+    "licensing": { "$ref": "#/$defs/licensing" },
+    "sourceMetadata": { "$ref": "#/$defs/sourceMetadata" }
+  },
+  "$defs": {
+    "document": {
+      "type": "object",
+      "required": ["title", "language", "canonicalUrl"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "language": { "type": "string", "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$" },
+        "canonicalUrl": { "type": "string", "format": "uri" }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["sourceId", "sourceType", "repository", "commit", "inputs"],
+      "properties": {
+        "sourceId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "sourceType": { "const": "git" },
+        "repository": { "type": "string", "format": "uri" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40,64}$" },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/input" },
+          "contains": {
+            "type": "object",
+            "required": ["role"],
+            "properties": { "role": { "const": "primary" } }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "input": {
+      "type": "object",
+      "required": ["path", "role", "sha256"],
+      "properties": {
+        "path": { "$ref": "#/$defs/relativePath" },
+        "role": { "type": "string", "enum": ["primary", "include", "metadata", "asset", "license"] },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "content": {
+      "type": "object",
+      "required": ["original", "normalized"],
+      "properties": {
+        "original": { "$ref": "#/$defs/originalContent" },
+        "normalized": { "$ref": "#/$defs/normalizedContent" }
+      },
+      "additionalProperties": false
+    },
+    "originalContent": {
+      "type": "object",
+      "required": ["mediaType", "encoding", "text", "sha256"],
+      "properties": {
+        "mediaType": { "type": "string", "minLength": 1 },
+        "encoding": { "const": "utf-8" },
+        "text": { "type": "string" },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "normalizedContent": {
+      "type": "object",
+      "required": ["mediaType", "text", "sha256", "transformations"],
+      "properties": {
+        "mediaType": { "const": "text/markdown" },
+        "text": { "type": "string" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "transformations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/transformation" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "transformation": {
+      "type": "object",
+      "required": ["id", "version"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "licensing": {
+      "type": "object",
+      "required": ["policyFiles", "rules"],
+      "properties": {
+        "policyFiles": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/policyFile" }
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/licenseRule" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "policyFile": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "$ref": "#/$defs/relativePath" },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "licenseRule": {
+      "type": "object",
+      "required": ["licenseId", "scope", "condition"],
+      "properties": {
+        "licenseId": { "type": "string", "minLength": 1 },
+        "scope": { "type": "string", "enum": ["document", "prose", "code", "media", "other"] },
+        "condition": { "$ref": "#/$defs/licenseCondition" },
+        "attributionNotice": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "licenseCondition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind"],
+          "properties": { "kind": { "const": "unconditional" } },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "date"],
+          "properties": {
+            "kind": { "type": "string", "enum": ["introduced-before", "introduced-on-or-after"] },
+            "date": { "type": "string", "format": "date" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "description"],
+          "properties": {
+            "kind": { "const": "declared-by-source" },
+            "description": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "sourceMetadata": {
+      "type": "object",
+      "required": ["namespace", "schemaVersion", "data"],
+      "properties": {
+        "namespace": { "type": "string", "minLength": 1 },
+        "schemaVersion": { "type": "integer", "minimum": 1 },
+        "data": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:)(?![/\\\\])(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+$"
+    }
+  },
+  "additionalProperties": false
+}
