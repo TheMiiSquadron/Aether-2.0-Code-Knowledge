@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "mdn",
+      "name": "MDN Web Docs",
+      "provider": "Mozilla",
+      "authority": "official-reference",
+      "topics": [
+        "javascript",
+        "html",
+        "css",
+        "web-apis"
+      ],
+      "sourceType": "git",
+      "repository": "https://github.com/mdn/content.git",
+      "contentPath": "files/en-us",
+      "homepage": "https://developer.mozilla.org/",
+      "enabled": true
+    },
+    {
+      "id": "nodejs-api",
+      "name": "Node.js API Documentation",
+      "provider": "OpenJS Foundation / Node.js",
+      "authority": "official",
+      "topics": [
+        "nodejs",
+        "javascript"
+      ],
+      "sourceType": "git",
+      "repository": "https://github.com/nodejs/node.git",
+      "contentPath": "doc/api",
+      "homepage": "https://nodejs.org/docs/latest/api/",
+      "enabled": true
+    },
+    {
+      "id": "git",
+      "name": "Git Documentation",
+      "provider": "Git Project",
+      "authority": "official",
+      "topics": [
+        "git",
+        "version-control"
+      ],
+      "sourceType": "git",
+      "repository": "https://github.com/git/git.git",
+      "contentPath": "Documentation",
+      "homepage": "https://git-scm.com/docs",
+      "enabled": true
+    }
+  ]
+}
