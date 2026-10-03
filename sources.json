@@ -16,6 +16,15 @@
       "repository": "https://github.com/mdn/content.git",
       "contentPath": "files/en-us",
       "homepage": "https://developer.mozilla.org/",
+      "license": {
+        "id": "CC-BY-SA",
+        "sourcePath": "LICENSE.md"
+      },
+      "provenance": {
+        "preserveRepository": true,
+        "preserveCommit": true,
+        "preserveSourcePath": true
+      },
       "enabled": true
     },
     {
@@ -31,6 +40,15 @@
       "repository": "https://github.com/nodejs/node.git",
       "contentPath": "doc/api",
       "homepage": "https://nodejs.org/docs/latest/api/",
+      "license": {
+        "id": "MIT",
+        "sourcePath": "LICENSE"
+      },
+      "provenance": {
+        "preserveRepository": true,
+        "preserveCommit": true,
+        "preserveSourcePath": true
+      },
       "enabled": true
     },
     {
@@ -46,6 +64,15 @@
       "repository": "https://github.com/git/git.git",
       "contentPath": "Documentation",
       "homepage": "https://git-scm.com/docs",
+      "license": {
+        "id": "GPL-2.0-only",
+        "sourcePath": "COPYING"
+      },
+      "provenance": {
+        "preserveRepository": true,
+        "preserveCommit": true,
+        "preserveSourcePath": true
+      },
       "enabled": true
     }
   ]

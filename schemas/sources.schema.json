@@ -33,6 +33,8 @@
         "repository",
         "contentPath",
         "homepage",
+        "license",
+        "provenance",
         "enabled"
       ],
       "properties": {
@@ -82,7 +84,51 @@
           "type": "string",
           "format": "uri"
         },
+        "license": {
+          "$ref": "#/$defs/license"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
         "enabled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "license": {
+      "type": "object",
+      "required": [
+        "id",
+        "sourcePath"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourcePath": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "preserveRepository",
+        "preserveCommit",
+        "preserveSourcePath"
+      ],
+      "properties": {
+        "preserveRepository": {
+          "type": "boolean"
+        },
+        "preserveCommit": {
+          "type": "boolean"
+        },
+        "preserveSourcePath": {
           "type": "boolean"
         }
       },

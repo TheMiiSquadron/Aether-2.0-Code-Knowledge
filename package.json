@@ -1,0 +1,26 @@
+{
+  "name": "aether-2.0-code-knowledge",
+  "version": "1.0.0",
+  "description": "Curated coding documentation and knowledge sources for Aether 2.0's models.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "validate:sources": "node scripts/validate/sources.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheMiiSquadron/Aether-2.0-Code-Knowledge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/TheMiiSquadron/Aether-2.0-Code-Knowledge/issues"
+  },
+  "homepage": "https://github.com/TheMiiSquadron/Aether-2.0-Code-Knowledge#readme",
+  "private": true,
+  "devDependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  }
+}
