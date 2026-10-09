@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/TheMiiSquadron/Aether-2.0-Code-Knowledge/schemas/sources.schema.json",
+  "$id": "https://github.com/TheMiiSquadron/Aether-2.0-Knowledge/schemas/sources.schema.json",
   "title": "Aether 2.0 Knowledge Source Registry",
   "type": "object",
   "required": [

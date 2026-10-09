@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/TheMiiSquadron/Aether-2.0-Code-Knowledge/schemas/processed-record.schema.json",
+  "$id": "https://github.com/TheMiiSquadron/Aether-2.0-Knowledge/schemas/processed-record.schema.json",
   "title": "Aether 2.0 Processed Knowledge Record",
   "type": "object",
   "required": ["schemaVersion", "id", "document", "provenance", "content", "licensing", "sourceMetadata"],

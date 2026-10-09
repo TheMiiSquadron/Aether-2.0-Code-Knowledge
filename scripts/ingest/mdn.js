@@ -106,7 +106,7 @@ function createRecord({ upstreamRoot, relativePath, source, commit }) {
 
   return {
     $schema:
-      "https://github.com/TheMiiSquadron/Aether-2.0-Code-Knowledge/schemas/processed-record.schema.json",
+      "https://github.com/TheMiiSquadron/Aether-2.0-Knowledge/schemas/processed-record.schema.json",
     schemaVersion: 1,
     id: `${source.id}:${frontMatter.slug}`,
     document: {

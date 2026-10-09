@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/TheMiiSquadron/Aether-2.0-Code-Knowledge/schemas/source-metadata/mdn.schema.json",
+  "$id": "https://github.com/TheMiiSquadron/Aether-2.0-Knowledge/schemas/source-metadata/mdn.schema.json",
   "title": "MDN Processed Record Source Metadata",
   "type": "object",
   "required": ["namespace", "schemaVersion", "data"],
