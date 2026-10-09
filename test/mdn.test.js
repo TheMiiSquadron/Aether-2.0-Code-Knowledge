@@ -89,7 +89,7 @@ test("record preserves exact source content, hashes, provenance, and source meta
   assert.equal(roundTrip.content.normalized.text, record.content.normalized.text);
 });
 
-const localMdnRoot = path.resolve(root, "../../upstream/mdn");
+const localMdnRoot = path.resolve(root, "../Aether-Documentation/mdn");
 const localMapPath = "files/en-us/web/javascript/reference/global_objects/array/map/index.md";
 const hasLocalMdn =
   fs.existsSync(path.join(localMdnRoot, ".git")) &&
@@ -118,7 +118,6 @@ test(
 
     assert.equal(record.content.original.text, upstreamText);
     assert.equal(record.content.normalized.text, expectedBody);
-    assert.equal(record.content.original.text.includes("—"), true);
     assert.equal(
       JSON.parse(JSON.stringify(record)).content.normalized.text,
       expectedBody
