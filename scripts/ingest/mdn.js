@@ -210,7 +210,7 @@ function argumentValue(name, fallback) {
 
 if (require.main === module) {
   const upstreamRoot = path.resolve(
-    argumentValue("--upstream", path.resolve(projectRoot, "../../upstream/mdn"))
+    argumentValue("--upstream", path.resolve(projectRoot, "../Aether-Documentation/mdn"))
   );
   const outputRoot = path.resolve(
     argumentValue("--output", path.join(projectRoot, "processed/mdn-sample"))
