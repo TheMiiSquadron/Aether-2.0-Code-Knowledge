@@ -1,23 +1,32 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "sources": [
     {
       "id": "mdn",
       "name": "MDN Web Docs",
       "provider": "Mozilla",
       "authority": "official-reference",
-      "topics": ["javascript", "html", "css", "web-apis"],
+      "topics": [
+        "javascript",
+        "html",
+        "css",
+        "web-apis"
+      ],
       "sourceType": "git",
       "repository": "https://github.com/mdn/content.git",
       "contentPath": "files/en-us",
       "homepage": "https://developer.mozilla.org/",
       "licensing": {
-        "policyPaths": ["LICENSE.md"],
+        "policyPaths": [
+          "LICENSE.md"
+        ],
         "rules": [
           {
             "licenseId": "CC-BY-SA-2.5",
             "scope": "prose",
-            "condition": { "kind": "unconditional" }
+            "condition": {
+              "kind": "unconditional"
+            }
           },
           {
             "licenseId": "CC0-1.0",
@@ -38,7 +47,12 @@
         ]
       },
       "provenance": {
-        "requiredFields": ["repository", "commit", "sourcePath", "contentHash"]
+        "requiredFields": [
+          "repository",
+          "commit",
+          "sourcePath",
+          "contentHash"
+        ]
       },
       "adapter": {
         "id": "mdn",
@@ -46,57 +60,90 @@
         "metadataNamespace": "mdn",
         "metadataSchema": "schemas/source-metadata/mdn.schema.json"
       },
-      "enabled": true
+      "enabled": true,
+      "pillars": [
+        "02-coding"
+      ]
     },
     {
       "id": "nodejs-api",
       "name": "Node.js API Documentation",
       "provider": "OpenJS Foundation / Node.js",
       "authority": "official",
-      "topics": ["nodejs", "javascript"],
+      "topics": [
+        "nodejs",
+        "javascript"
+      ],
       "sourceType": "git",
       "repository": "https://github.com/nodejs/node.git",
       "contentPath": "doc/api",
       "homepage": "https://nodejs.org/docs/latest/api/",
       "licensing": {
-        "policyPaths": ["LICENSE"],
+        "policyPaths": [
+          "LICENSE"
+        ],
         "rules": [
           {
             "licenseId": "MIT",
             "scope": "document",
-            "condition": { "kind": "unconditional" }
+            "condition": {
+              "kind": "unconditional"
+            }
           }
         ]
       },
       "provenance": {
-        "requiredFields": ["repository", "commit", "sourcePath", "contentHash"]
+        "requiredFields": [
+          "repository",
+          "commit",
+          "sourcePath",
+          "contentHash"
+        ]
       },
-      "enabled": true
+      "enabled": true,
+      "pillars": [
+        "02-coding"
+      ]
     },
     {
       "id": "git",
       "name": "Git Documentation",
       "provider": "Git Project",
       "authority": "official",
-      "topics": ["git", "version-control"],
+      "topics": [
+        "git",
+        "version-control"
+      ],
       "sourceType": "git",
       "repository": "https://github.com/git/git.git",
       "contentPath": "Documentation",
       "homepage": "https://git-scm.com/docs",
       "licensing": {
-        "policyPaths": ["COPYING"],
+        "policyPaths": [
+          "COPYING"
+        ],
         "rules": [
           {
             "licenseId": "GPL-2.0-only",
             "scope": "document",
-            "condition": { "kind": "unconditional" }
+            "condition": {
+              "kind": "unconditional"
+            }
           }
         ]
       },
       "provenance": {
-        "requiredFields": ["repository", "commit", "sourcePath", "contentHash"]
+        "requiredFields": [
+          "repository",
+          "commit",
+          "sourcePath",
+          "contentHash"
+        ]
       },
-      "enabled": true
+      "enabled": true,
+      "pillars": [
+        "02-coding"
+      ]
     }
   ]
 }

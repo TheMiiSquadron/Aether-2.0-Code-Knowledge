@@ -1,69 +1,176 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/TheMiiSquadron/Aether-2.0-Code-Knowledge/schemas/sources.schema.json",
-  "title": "Aether 2.0 Code Knowledge Source Registry",
+  "title": "Aether 2.0 Knowledge Source Registry",
   "type": "object",
-  "required": ["schemaVersion", "sources"],
+  "required": [
+    "schemaVersion",
+    "sources"
+  ],
   "properties": {
-    "schemaVersion": { "const": 2 },
+    "schemaVersion": {
+      "const": 3
+    },
     "sources": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/source" }
+      "items": {
+        "$ref": "#/$defs/source"
+      }
     }
   },
   "$defs": {
     "source": {
       "type": "object",
-      "required": ["id", "name", "provider", "authority", "topics", "sourceType", "repository", "contentPath", "homepage", "licensing", "provenance", "enabled"],
+      "required": [
+        "id",
+        "name",
+        "provider",
+        "authority",
+        "topics",
+        "sourceType",
+        "repository",
+        "contentPath",
+        "homepage",
+        "licensing",
+        "provenance",
+        "enabled",
+        "pillars"
+      ],
       "properties": {
-        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
-        "name": { "type": "string", "minLength": 1 },
-        "provider": { "type": "string", "minLength": 1 },
-        "authority": { "type": "string", "enum": ["official", "official-reference"] },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authority": {
+          "type": "string",
+          "enum": [
+            "official",
+            "official-reference"
+          ]
+        },
         "topics": {
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
-          "items": { "type": "string", "minLength": 1 }
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         },
-        "sourceType": { "const": "git" },
-        "repository": { "type": "string", "format": "uri" },
-        "contentPath": { "$ref": "#/$defs/relativePath" },
-        "homepage": { "type": "string", "format": "uri" },
-        "licensing": { "$ref": "#/$defs/licensing" },
-        "provenance": { "$ref": "#/$defs/provenance" },
-        "adapter": { "$ref": "#/$defs/adapter" },
-        "enabled": { "type": "boolean" }
+        "sourceType": {
+          "const": "git"
+        },
+        "repository": {
+          "type": "string",
+          "format": "uri"
+        },
+        "contentPath": {
+          "$ref": "#/$defs/relativePath"
+        },
+        "homepage": {
+          "type": "string",
+          "format": "uri"
+        },
+        "licensing": {
+          "$ref": "#/$defs/licensing"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "adapter": {
+          "$ref": "#/$defs/adapter"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "pillars": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "01-conversation",
+              "02-coding",
+              "03-computer-control",
+              "04-memory-knowledge",
+              "05-research",
+              "06-productivity",
+              "07-creativity",
+              "08-automation",
+              "09-multimodal-understanding",
+              "10-data-analysis",
+              "11-artifact-creation",
+              "12-integrations"
+            ]
+          }
+        }
       },
       "additionalProperties": false
     },
     "licensing": {
       "type": "object",
-      "required": ["policyPaths", "rules"],
+      "required": [
+        "policyPaths",
+        "rules"
+      ],
       "properties": {
         "policyPaths": {
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
-          "items": { "$ref": "#/$defs/relativePath" }
+          "items": {
+            "$ref": "#/$defs/relativePath"
+          }
         },
         "rules": {
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/licenseRule" }
+          "items": {
+            "$ref": "#/$defs/licenseRule"
+          }
         }
       },
       "additionalProperties": false
     },
     "licenseRule": {
       "type": "object",
-      "required": ["licenseId", "scope", "condition"],
+      "required": [
+        "licenseId",
+        "scope",
+        "condition"
+      ],
       "properties": {
-        "licenseId": { "type": "string", "minLength": 1 },
-        "scope": { "type": "string", "enum": ["document", "prose", "code", "media", "other"] },
-        "condition": { "$ref": "#/$defs/licenseCondition" },
-        "attributionNotice": { "type": "string", "minLength": 1 }
+        "licenseId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "document",
+            "prose",
+            "code",
+            "media",
+            "other"
+          ]
+        },
+        "condition": {
+          "$ref": "#/$defs/licenseCondition"
+        },
+        "attributionNotice": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "additionalProperties": false
     },
@@ -71,25 +178,51 @@
       "oneOf": [
         {
           "type": "object",
-          "required": ["kind"],
-          "properties": { "kind": { "const": "unconditional" } },
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "required": ["kind", "date"],
+          "required": [
+            "kind"
+          ],
           "properties": {
-            "kind": { "type": "string", "enum": ["introduced-before", "introduced-on-or-after"] },
-            "date": { "type": "string", "format": "date" }
+            "kind": {
+              "const": "unconditional"
+            }
           },
           "additionalProperties": false
         },
         {
           "type": "object",
-          "required": ["kind", "description"],
+          "required": [
+            "kind",
+            "date"
+          ],
           "properties": {
-            "kind": { "const": "declared-by-source" },
-            "description": { "type": "string", "minLength": 1 }
+            "kind": {
+              "type": "string",
+              "enum": [
+                "introduced-before",
+                "introduced-on-or-after"
+              ]
+            },
+            "date": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "description"
+          ],
+          "properties": {
+            "kind": {
+              "const": "declared-by-source"
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            }
           },
           "additionalProperties": false
         }
@@ -97,18 +230,44 @@
     },
     "provenance": {
       "type": "object",
-      "required": ["requiredFields"],
+      "required": [
+        "requiredFields"
+      ],
       "properties": {
         "requiredFields": {
           "type": "array",
           "minItems": 4,
           "uniqueItems": true,
-          "items": { "type": "string", "enum": ["repository", "commit", "sourcePath", "contentHash"] },
+          "items": {
+            "type": "string",
+            "enum": [
+              "repository",
+              "commit",
+              "sourcePath",
+              "contentHash"
+            ]
+          },
           "allOf": [
-            { "contains": { "const": "repository" } },
-            { "contains": { "const": "commit" } },
-            { "contains": { "const": "sourcePath" } },
-            { "contains": { "const": "contentHash" } }
+            {
+              "contains": {
+                "const": "repository"
+              }
+            },
+            {
+              "contains": {
+                "const": "commit"
+              }
+            },
+            {
+              "contains": {
+                "const": "sourcePath"
+              }
+            },
+            {
+              "contains": {
+                "const": "contentHash"
+              }
+            }
           ]
         }
       },
@@ -116,12 +275,28 @@
     },
     "adapter": {
       "type": "object",
-      "required": ["id", "version", "metadataNamespace", "metadataSchema"],
+      "required": [
+        "id",
+        "version",
+        "metadataNamespace",
+        "metadataSchema"
+      ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
-        "version": { "type": "integer", "minimum": 1 },
-        "metadataNamespace": { "type": "string", "minLength": 1 },
-        "metadataSchema": { "$ref": "#/$defs/relativePath" }
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "metadataNamespace": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metadataSchema": {
+          "$ref": "#/$defs/relativePath"
+        }
       },
       "additionalProperties": false
     },
