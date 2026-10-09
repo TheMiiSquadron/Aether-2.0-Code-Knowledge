@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
 const YAML = require("yaml");
+const { resolveOutputRoot } = require("../lib/pillar-storage");
 
 const projectRoot = path.resolve(__dirname, "../..");
 
@@ -175,7 +176,7 @@ function outputPathFor(outputRoot, relativePath) {
   return path.join(outputRoot, contentRelative.replace(/\/index\.md$/, "/record.json"));
 }
 
-function ingestSample({ upstreamRoot, outputRoot, registry }) {
+function ingestSample({ upstreamRoot, outputRoot, pillar, registry }) {
   const source = registry.sources.find((entry) => entry.id === "mdn");
   if (!source || !source.enabled) throw new Error("Enabled MDN source not found");
   if (!source.adapter || source.adapter.id !== "mdn" || source.adapter.version !== 1) {
@@ -183,7 +184,9 @@ function ingestSample({ upstreamRoot, outputRoot, registry }) {
   }
 
   const resolvedUpstream = path.resolve(upstreamRoot);
-  const resolvedOutput = path.resolve(outputRoot);
+  const resolvedOutput = resolveOutputRoot({
+    projectRoot, source, dataset: "mdn-sample", pillar, outputRoot
+  });
   const outputRelativeToUpstream = path.relative(resolvedUpstream, resolvedOutput);
   if (!outputRelativeToUpstream.startsWith("..") && !path.isAbsolute(outputRelativeToUpstream)) {
     throw new Error("Output directory must not be inside the upstream repository");
@@ -205,20 +208,27 @@ function ingestSample({ upstreamRoot, outputRoot, registry }) {
 
 function argumentValue(name, fallback) {
   const index = process.argv.indexOf(name);
-  return index === -1 ? fallback : process.argv[index + 1];
+  if (index === -1) return fallback;
+  const value = process.argv[index + 1];
+  if (!value || value.startsWith("--")) throw new Error(`Missing value for ${name}`);
+  return value;
 }
 
 if (require.main === module) {
   const upstreamRoot = path.resolve(
     argumentValue("--upstream", path.resolve(projectRoot, "../Aether-Documentation/mdn"))
   );
-  const outputRoot = path.resolve(
-    argumentValue("--output", path.join(projectRoot, "processed/mdn-sample"))
-  );
   const registry = JSON.parse(
     fs.readFileSync(path.join(projectRoot, "sources.json"), "utf8")
   );
-  const records = ingestSample({ upstreamRoot, outputRoot, registry });
+  const source = registry.sources.find((entry) => entry.id === "mdn");
+  if (!source) throw new Error("MDN source not found");
+  const pillar = argumentValue("--pillar");
+  const outputRoot = resolveOutputRoot({
+    projectRoot, source, dataset: "mdn-sample", pillar,
+    outputRoot: argumentValue("--output")
+  });
+  const records = ingestSample({ upstreamRoot, outputRoot, pillar, registry });
   console.log(`Wrote ${records.length} MDN sample records to ${outputRoot}`);
 }
 

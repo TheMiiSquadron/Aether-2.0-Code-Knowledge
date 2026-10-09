@@ -23,17 +23,29 @@ The `pillars/` directory provides the organizational structure for these capabil
 
 ## Knowledge Architecture
 
-Aether uses a shared source registry rather than maintaining separate copies of documentation for each Pillar.
+Aether keeps generated knowledge within each of its 12 Pillars, with a central source registry, shared schemas, and reusable infrastructure.
 
 - `sources.json` — Registered documentation sources and their Pillar assignments.
 - `schemas/` — JSON schemas for source and processed-record validation.
 - `scripts/ingest/` — Documentation ingestion adapters.
 - `scripts/validate/` — Registry and record validators.
-- `processed/` — Normalized documentation records.
+- `pillars/<pillar>/processed/` — Generated knowledge records for each Pillar.
 - `guidance/` — Knowledge guidance and policies.
 - `pillars/` — Directories for the 12 Pillars.
 
 The source registry currently uses schema version 3. Each source has a `pillars` array that can reference one or more Pillars.
+
+Adapters derive valid destinations from that array. A single assigned Pillar is
+selected automatically; multi-Pillar sources require `--pillar <id>` to select
+an assigned Pillar, or `--output <path>` for a custom destination.
+Repeated runs for different assigned Pillars can store identical source records.
+Record IDs and provenance remain source-based. Validation permits identical
+copies but rejects conflicting records for the same source document and commit.
+
+The root validator scans only recognized Pillars' `processed/` directories and
+checks source membership in the containing Pillar. Records remaining under the
+legacy root `processed/` directory cause an explicit validation failure.
+Generated records are ignored by Git.
 
 ## Current Knowledge Sources
 
@@ -61,9 +73,13 @@ This path is relative to the Aether knowledge repository.
 
 The upstream repository can be overridden with `--upstream <path>`.
 
+The default MDN output is `pillars/02-coding/processed/mdn-sample/`.
+Use `--output <path>` to override it. The sibling upstream path is unchanged.
+
 ### Commands
 
 ```sh
 npm run ingest:mdn:sample
 npm run validate
 npm test
+```

@@ -3,22 +3,15 @@ const fs = require("fs");
 const path = require("path");
 const Ajv2020 = require("ajv/dist/2020");
 const addFormats = require("ajv-formats");
+const {
+  discoverProcessedRecords, assertPillarMembership, checkRecordCopy
+} = require("../lib/pillar-storage");
 
 const root = path.resolve(__dirname, "../..");
-const processedRoot = path.join(root, "processed");
 const registry = JSON.parse(fs.readFileSync(path.join(root, "sources.json"), "utf8"));
 const recordSchema = JSON.parse(
   fs.readFileSync(path.join(root, "schemas", "processed-record.schema.json"), "utf8")
 );
-
-function jsonFiles(directory) {
-  if (!fs.existsSync(directory)) return [];
-  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    const entryPath = path.join(directory, entry.name);
-    if (entry.isDirectory()) return jsonFiles(entryPath);
-    return entry.isFile() && entry.name.endsWith(".json") ? [entryPath] : [];
-  });
-}
 
 const ajv = new Ajv2020({ allErrors: true, strict: true });
 addFormats(ajv);
@@ -43,8 +36,12 @@ for (const source of registry.sources) {
 }
 
 let failed = false;
-const files = jsonFiles(processedRoot);
-for (const file of files) {
+const { records: files, legacyFiles } = discoverProcessedRecords(root);
+for (const file of legacyFiles) {
+  recordError(file, "legacy root processed/ record must be relocated to an assigned Pillar");
+}
+const seen = new Map();
+for (const { file, pillar } of files) {
   const record = JSON.parse(fs.readFileSync(file, "utf8"));
   if (!validateRecord(record)) {
     failed = true;
@@ -59,6 +56,12 @@ for (const file of files) {
   if (!source) {
     recordError(file, `unknown source id '${record.provenance.sourceId}'`);
     continue;
+  }
+  try {
+    assertPillarMembership(source, pillar);
+    checkRecordCopy(seen, record, file);
+  } catch (error) {
+    recordError(file, error.message);
   }
   if (record.provenance.repository !== source.repository) {
     recordError(file, "provenance repository does not match the source registry");

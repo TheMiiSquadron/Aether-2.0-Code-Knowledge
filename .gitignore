@@ -4,6 +4,8 @@ node_modules/
 # Generated local knowledge artifacts
 processed/*
 !processed/.gitkeep
+pillars/*/processed/*
+!pillars/*/processed/.gitkeep
 
 # Local environment/configuration
 .env
